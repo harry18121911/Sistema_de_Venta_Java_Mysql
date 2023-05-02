@@ -6,7 +6,9 @@ package Vista;
 
 import Modelo.Cliente;
 import Modelo.ClienteDAO;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,7 +18,7 @@ public class Sistema extends javax.swing.JFrame {
     
     Cliente cl = new Cliente();
     ClienteDAO client = new ClienteDAO();
-    
+    DefaultTableModel modelo = new DefaultTableModel();
     /**
      * Creates new form Sistema
      */
@@ -24,6 +26,30 @@ public class Sistema extends javax.swing.JFrame {
         initComponents();
     }
 
+    public void ListarCliente(){
+    
+        List<Cliente> ListarCl = client.ListarCliente();
+        modelo = (DefaultTableModel) tableCliente.getModel();
+        Object[] ob = new Object[6];
+        for (int i = 0; i < ListarCl.size(); i++  ){
+            ob[0]=ListarCl.get(i).getId();
+            ob[1]=ListarCl.get(i).getDni();
+            ob[2]=ListarCl.get(i).getNombre();
+            ob[3]=ListarCl.get(i).getTelefono();
+            ob[4]=ListarCl.get(i).getDireccion();
+            ob[5]=ListarCl.get(i).getRazon();
+            modelo.addRow(ob);
+        }
+        tableCliente.setModel(modelo);
+    
+    }
+    
+    public void LimpiarTable(){
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i = i-1;
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,6 +178,11 @@ public class Sistema extends javax.swing.JFrame {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Clientes.png"))); // NOI18N
         jButton2.setText("Clientes");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/proveedor.png"))); // NOI18N
         jButton3.setText("Proveedores");
@@ -892,6 +923,14 @@ public class Sistema extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Los campos están vacios");
         }
     }//GEN-LAST:event_btnGuardarClienteActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        LimpiarTable();
+        ListarCliente();
+        jTabbedPane2.setSelectedIndex(1);
+        
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

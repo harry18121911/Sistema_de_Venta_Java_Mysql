@@ -3,9 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Modelo;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 /**
  *
@@ -16,6 +20,8 @@ public class ClienteDAO {
     Conexion cn = new Conexion();
     Connection con;
     PreparedStatement ps;
+    ResultSet rs;
+    
     public boolean  RegistrarCliente(Cliente cl){
         String sql= "insert into clientes (dni, nombre, telefono, direccion, razon) values(?,?,?,?,?)";
         try {
@@ -41,4 +47,31 @@ public class ClienteDAO {
         }
     
     }
+
+    public List ListarCliente(){
+        List<Cliente>ListaCl = new ArrayList();
+        String sql = "select * from clientes";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                Cliente cl = new Cliente();
+                cl.setId(rs.getInt("id"));
+                cl.setDni(rs.getInt("dni"));
+                cl.setNombre(rs.getString("nombre"));
+                cl.setTelefono(rs.getInt("telefono"));
+                cl.setDireccion(rs.getString("direccion"));
+                cl.setRazon(rs.getString("razon"));
+                ListaCl.add(cl);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return ListaCl;
+        
+    }
+
+
 }
