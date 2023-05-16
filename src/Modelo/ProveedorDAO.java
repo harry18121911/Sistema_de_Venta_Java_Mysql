@@ -46,4 +46,32 @@ public class ProveedorDAO {
         }
     
     }
+
+    public List ListarProveedor(){
+        List<Proveedor> Listapr = new ArrayList();
+        String sql = "select * from proveedor";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Proveedor pr = new Proveedor();
+                pr.setId(rs.getInt("id"));
+                pr.setDni(rs.getInt("dni"));
+                pr.setNombre(rs.getString("nombre"));
+                pr.setTelefono(rs.getInt("telefono"));
+                pr.setDireccion(rs.getString("direccion"));
+                pr.setRazon(rs.getString("razon"));
+                Listapr.add(pr);
+            
+            }
+            
+            
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        
+        return Listapr;
+    }
+
 }

@@ -51,6 +51,26 @@ public class Sistema extends javax.swing.JFrame {
         tableCliente.setModel(modelo);
 
     }
+    
+    public void ListarProveedor() {
+
+        List<Proveedor> ListarPr = prDAO.ListarProveedor();
+        modelo = (DefaultTableModel) tableProveedor.getModel();
+        Object[] ob = new Object[6];
+        for (int i = 0; i < ListarPr.size(); i++) {
+            ob[0] = ListarPr.get(i).getId();
+            ob[1] = ListarPr.get(i).getDni();
+            ob[2] = ListarPr.get(i).getNombre();
+            ob[3] = ListarPr.get(i).getTelefono();
+            ob[4] = ListarPr.get(i).getDireccion();
+            ob[5] = ListarPr.get(i).getRazon();
+            modelo.addRow(ob);
+        }
+        tableProveedor.setModel(modelo);
+
+    }
+    
+    
 
     public void LimpiarTable() {
         for (int i = 0; i < modelo.getRowCount(); i++) {
@@ -195,6 +215,11 @@ public class Sistema extends javax.swing.JFrame {
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/proveedor.png"))); // NOI18N
         jButton3.setText("Proveedores");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/producto.png"))); // NOI18N
         jButton4.setText("Productos");
@@ -586,16 +611,16 @@ public class Sistema extends javax.swing.JFrame {
 
             },
             new String [] {
-                "DNI", "NOMBRE", "TELEFONO", "DIRECCION", "RAZON SOCIAL"
+                "ID", "DNI", "NOMBRE", "TELEFONO", "DIRECCION", "RAZON SOCIAL"
             }
         ));
         jScrollPane3.setViewportView(tableProveedor);
         if (tableProveedor.getColumnModel().getColumnCount() > 0) {
-            tableProveedor.getColumnModel().getColumn(0).setPreferredWidth(100);
             tableProveedor.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tableProveedor.getColumnModel().getColumn(2).setPreferredWidth(80);
-            tableProveedor.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tableProveedor.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tableProveedor.getColumnModel().getColumn(3).setPreferredWidth(80);
             tableProveedor.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tableProveedor.getColumnModel().getColumn(5).setPreferredWidth(100);
         }
 
         btnGuardarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/GuardarTodo.png"))); // NOI18N
@@ -647,8 +672,8 @@ public class Sistema extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txtNombreProveedor))))
                 .addGap(56, 56, 56)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(127, 127, 127))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1049,6 +1074,15 @@ public class Sistema extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Los campos están vacíos");
         }
     }//GEN-LAST:event_btnGuardarProveedorActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        LimpiarTable();
+        ListarProveedor();
+        jTabbedPane2.setSelectedIndex(2);
+        
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
