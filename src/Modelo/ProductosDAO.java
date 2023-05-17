@@ -83,4 +83,25 @@ public class ProductosDAO {
         return ListaPro;
         
     }
+    
+    public boolean EliminarProductos(int id){
+        String sql = "delete from productos where id=?";
+        try {
+            ps =con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+            return  true;
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            return false;
+        }
+        finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.toString());
+            }
+        }
+    }
+
 }
