@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 /**
  *
@@ -19,6 +20,7 @@ public class ProductosDAO {
     Connection con;
     Conexion cn = new Conexion();
     PreparedStatement ps;
+    ResultSet rs;
 
     public boolean RegistrarProductos(Productos pro){
       String sql = "insert into productos (codigo, nombre, proveedor, stock, precio) values (?,?,?,?,?)" ;
@@ -40,5 +42,20 @@ public class ProductosDAO {
     
     }
 
-
+    public void ConsultarProveedor (JComboBox proveedor){
+        String sql = "select nombre from proveedor";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                proveedor.addItem(rs.getString("nombre"));
+                         
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    
+    }
 }
