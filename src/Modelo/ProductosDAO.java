@@ -58,4 +58,29 @@ public class ProductosDAO {
         }
     
     }
+
+    public List ListarProductos(){
+        List<Productos>ListaPro = new ArrayList();
+        String sql = "select * from productos";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                Productos pro = new Productos();
+                pro.setId(rs.getInt("id"));
+                pro.setCodigo(rs.getString("codigo"));
+                pro.setNombre(rs.getString("nombre"));
+                pro.setProveedor(rs.getString("proveedor"));
+                pro.setStock(rs.getInt("stock"));
+                pro.setPrecio(rs.getDouble("precio"));
+                ListaPro.add(pro);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return ListaPro;
+        
+    }
 }
