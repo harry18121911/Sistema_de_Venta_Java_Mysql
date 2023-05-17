@@ -6,6 +6,8 @@ package Vista;
 
 import Modelo.Cliente;
 import Modelo.ClienteDAO;
+import Modelo.Productos;
+import Modelo.ProductosDAO;
 import Modelo.Proveedor;
 import Modelo.ProveedorDAO;
 import java.util.List;
@@ -23,7 +25,9 @@ public class Sistema extends javax.swing.JFrame {
     Proveedor pr = new Proveedor();
     ProveedorDAO prDAO = new ProveedorDAO();
     DefaultTableModel modelo = new DefaultTableModel();
-
+    Productos pro = new Productos();
+    ProductosDAO proDAO = new ProductosDAO();
+    
     /**
      * Creates new form Sistema
      */
@@ -771,6 +775,11 @@ public class Sistema extends javax.swing.JFrame {
         }
 
         btnGuardarPro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/GuardarTodo.png"))); // NOI18N
+        btnGuardarPro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarProActionPerformed(evt);
+            }
+        });
 
         btnEliminarPro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar.png"))); // NOI18N
 
@@ -1038,6 +1047,7 @@ public class Sistema extends javax.swing.JFrame {
             if (pregunta == 0) {
                 int id = Integer.parseInt(txtIdCliente.getText());
                 client.EliminarCliente(id);
+                JOptionPane.showMessageDialog(null, "Cliente eliminado");
                 LimpiarTable();
                 LimpiarCliente();
                 ListarCliente();
@@ -1062,6 +1072,7 @@ public class Sistema extends javax.swing.JFrame {
                 cl.setRazon(txtRazonCliente.getText());
                 cl.setId(Integer.parseInt(txtIdCliente.getText()));
                 client.ModificarCliente(cl);
+                JOptionPane.showMessageDialog(null, "Cliente actualizado");
                 LimpiarTable();
                 LimpiarCliente();
                 ListarCliente();
@@ -1088,6 +1099,7 @@ public class Sistema extends javax.swing.JFrame {
             pr.setDireccion(txtDireccionProveedor.getText());
             pr.setRazon(txtRazonProveedor.getText());
             prDAO.RegistrarProveedor(pr);
+            JOptionPane.showMessageDialog(null, "Proveedor registrado");
             LimpiarTable();
             ListarProveedor();
             LimpiarProveedor();
@@ -1124,6 +1136,7 @@ public class Sistema extends javax.swing.JFrame {
             if (pregunta ==0){
                 int id = Integer.parseInt(txtIdProovedor.getText());
                 prDAO.EliminarProveedor(id);
+                JOptionPane.showMessageDialog(null, "Proveedor eliminado");
                 LimpiarTable();
                 ListarProveedor();
                 LimpiarProveedor();
@@ -1149,6 +1162,7 @@ public class Sistema extends javax.swing.JFrame {
                 pr.setRazon(txtRazonProveedor.getText());
                 pr.setId(Integer.parseInt(txtIdProovedor.getText()));
                 prDAO.ModificarProveedor(pr);
+                JOptionPane.showMessageDialog(null, "Proveedor actualizado");
                 LimpiarTable();
                 ListarProveedor();
                 LimpiarProveedor();
@@ -1166,6 +1180,21 @@ public class Sistema extends javax.swing.JFrame {
         // TODO add your handling code here:
         LimpiarProveedor();
     }//GEN-LAST:event_btnNuevoProveedorActionPerformed
+
+    private void btnGuardarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProActionPerformed
+        // TODO add your handling code here:
+        if(!"".equals(txtCodigoPro.getText()) || !"".equals(txtDesPro.getText())|| !"".equals(cbxProveedor.getSelectedItem()) || !"".equals(txtCanPro.getText()) || !"".equals(txtPrecioPro.getText())){
+            pro.setCodigo(txtCodigoPro.getText());
+            pro.setNombre(txtDesPro.getText());
+            pro.setProveedor(cbxProveedor.getSelectedItem().toString());
+            pro.setStock(Integer.parseInt(txtCanPro.getText()));
+            pro.setPrecio(Double.parseDouble(txtPrecioPro.getText()));
+            proDAO.RegistrarProductos(pro);  
+            JOptionPane.showMessageDialog(null, "Producto registrado");
+        }else{
+            JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+        }
+    }//GEN-LAST:event_btnGuardarProActionPerformed
 
     /**
      * @param args the command line arguments
