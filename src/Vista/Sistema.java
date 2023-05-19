@@ -29,7 +29,7 @@ public class Sistema extends javax.swing.JFrame {
     DefaultTableModel modelo = new DefaultTableModel();
     Productos pro = new Productos();
     ProductosDAO proDAO = new ProductosDAO();
-    
+
     /**
      * Creates new form Sistema
      */
@@ -39,7 +39,7 @@ public class Sistema extends javax.swing.JFrame {
         txtIdCliente.setVisible(false);
         AutoCompleteDecorator.decorate(cbxProveedor);
         proDAO.ConsultarProveedor(cbxProveedor);
-    
+
     }
 
     public void ListarCliente() {
@@ -59,7 +59,7 @@ public class Sistema extends javax.swing.JFrame {
         tableCliente.setModel(modelo);
 
     }
-    
+
     public void ListarProveedor() {
 
         List<Proveedor> ListarPr = prDAO.ListarProveedor();
@@ -77,7 +77,7 @@ public class Sistema extends javax.swing.JFrame {
         tableProveedor.setModel(modelo);
 
     }
-    
+
     public void ListarProductos() {
 
         List<Productos> ListarPro = proDAO.ListarProductos();
@@ -820,6 +820,11 @@ public class Sistema extends javax.swing.JFrame {
         });
 
         btnEditarPro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Actualizar (2).png"))); // NOI18N
+        btnEditarPro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarProActionPerformed(evt);
+            }
+        });
 
         btnNuevoPro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/nuevo.png"))); // NOI18N
 
@@ -1128,7 +1133,7 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoClienteActionPerformed
 
     private void btnGuardarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProveedorActionPerformed
-        if (!"".equals(txtDniProveedor.getText()) || !"".equals(txtNombreProveedor.getText()) || !"".equals(txtTelefonoProveedor.getText()) || !"".equals(txtDireccionProveedor.getText()) || !"".equals(txtRazonProveedor.getText())){
+        if (!"".equals(txtDniProveedor.getText()) || !"".equals(txtNombreProveedor.getText()) || !"".equals(txtTelefonoProveedor.getText()) || !"".equals(txtDireccionProveedor.getText()) || !"".equals(txtRazonProveedor.getText())) {
             pr.setDni(Integer.parseInt(txtDniProveedor.getText()));
             pr.setNombre(txtNombreProveedor.getText());
             pr.setTelefono(Integer.parseInt(txtTelefonoProveedor.getText()));
@@ -1139,9 +1144,9 @@ public class Sistema extends javax.swing.JFrame {
             LimpiarTable();
             ListarProveedor();
             LimpiarProveedor();
-            
-        }else{
-        JOptionPane.showMessageDialog(null, "Los campos están vacíos");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Los campos están vacíos");
         }
     }//GEN-LAST:event_btnGuardarProveedorActionPerformed
 
@@ -1150,8 +1155,8 @@ public class Sistema extends javax.swing.JFrame {
         LimpiarTable();
         ListarProveedor();
         jTabbedPane2.setSelectedIndex(2);
-        
-        
+
+
     }//GEN-LAST:event_btnProveedorActionPerformed
 
     private void tableProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProveedorMouseClicked
@@ -1169,28 +1174,26 @@ public class Sistema extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!"".equals(txtIdProovedor.getText())) {
             int pregunta = JOptionPane.showConfirmDialog(null, "Está seguro de eliminar este proveedor?");
-            if (pregunta ==0){
+            if (pregunta == 0) {
                 int id = Integer.parseInt(txtIdProovedor.getText());
                 prDAO.EliminarProveedor(id);
                 JOptionPane.showMessageDialog(null, "Proveedor eliminado");
                 LimpiarTable();
                 ListarProveedor();
                 LimpiarProveedor();
-            } 
-            }else{
-                JOptionPane.showMessageDialog(null, "Seleccione una fila");
             }
-        
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        }
+
     }//GEN-LAST:event_btnEliminarProveedorActionPerformed
 
     private void btnEditarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProveedorActionPerformed
         // TODO add your handling code here:
         if ("".equals(txtIdProovedor.getText())) {
             JOptionPane.showMessageDialog(null, "Seleccione una fila");
-        }else{
-            if (!"".equals(txtDniProveedor.getText()) && !"".equals(txtNombreProveedor.getText()) && !"".equals(txtTelefonoProveedor.getText()) && !"".equals(txtDireccionProveedor.getText()) && !"".equals(txtRazonProveedor.getText()))
-                
-            {
+        } else {
+            if (!"".equals(txtDniProveedor.getText()) && !"".equals(txtNombreProveedor.getText()) && !"".equals(txtTelefonoProveedor.getText()) && !"".equals(txtDireccionProveedor.getText()) && !"".equals(txtRazonProveedor.getText())) {
                 pr.setDni(Integer.parseInt(txtDniProveedor.getText()));
                 pr.setNombre(txtNombreProveedor.getText());
                 pr.setTelefono(Integer.parseInt(txtTelefonoProveedor.getText()));
@@ -1202,14 +1205,12 @@ public class Sistema extends javax.swing.JFrame {
                 LimpiarTable();
                 ListarProveedor();
                 LimpiarProveedor();
-                
-                
+
             }
-        
+
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_btnEditarProveedorActionPerformed
 
     private void btnNuevoProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoProveedorActionPerformed
@@ -1219,15 +1220,15 @@ public class Sistema extends javax.swing.JFrame {
 
     private void btnGuardarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProActionPerformed
         // TODO add your handling code here:
-        if(!"".equals(txtCodigoPro.getText()) || !"".equals(txtDesPro.getText())|| !"".equals(cbxProveedor.getSelectedItem()) || !"".equals(txtCanPro.getText()) || !"".equals(txtPrecioPro.getText())){
+        if (!"".equals(txtCodigoPro.getText()) || !"".equals(txtDesPro.getText()) || !"".equals(cbxProveedor.getSelectedItem()) || !"".equals(txtCanPro.getText()) || !"".equals(txtPrecioPro.getText())) {
             pro.setCodigo(txtCodigoPro.getText());
             pro.setNombre(txtDesPro.getText());
             pro.setProveedor(cbxProveedor.getSelectedItem().toString());
             pro.setStock(Integer.parseInt(txtCanPro.getText()));
             pro.setPrecio(Double.parseDouble(txtPrecioPro.getText()));
-            proDAO.RegistrarProductos(pro);  
+            proDAO.RegistrarProductos(pro);
             JOptionPane.showMessageDialog(null, "Producto registrado");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Los campos estan vacios");
         }
     }//GEN-LAST:event_btnGuardarProActionPerformed
@@ -1237,7 +1238,7 @@ public class Sistema extends javax.swing.JFrame {
         LimpiarTable();
         ListarProductos();
         jTabbedPane2.setSelectedIndex(3);
-        
+
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void tableProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProductoMouseClicked
@@ -1255,19 +1256,45 @@ public class Sistema extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!"".equals(txtIdPro.getText())) {
             int pregunta = JOptionPane.showConfirmDialog(null, "Está seguro de eliminar este producto?");
-            if (pregunta ==0){
+            if (pregunta == 0) {
                 int id = Integer.parseInt(txtIdPro.getText());
                 proDAO.EliminarProductos(id);
                 JOptionPane.showMessageDialog(null, "Producto eliminado");
                 LimpiarTable();
                 LimpiarProductos();
                 ListarProductos();
-                
-            } 
-            }else{
-                JOptionPane.showMessageDialog(null, "Seleccione una fila");
+
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        }
     }//GEN-LAST:event_btnEliminarProActionPerformed
+
+    private void btnEditarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProActionPerformed
+        // TODO add your handling code here:
+
+        if ("".equals(txtIdPro.getText())) {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        } else {
+            if (!"".equals(txtCodigoPro.getText()) && !"".equals(txtDesPro.getText()) && !"".equals(txtCanPro.getText()) && !"".equals(txtPrecioPro.getText())) {
+
+                pro.setCodigo(txtCodigoPro.getText());
+                pro.setNombre(txtDesPro.getText());
+                pro.setProveedor(cbxProveedor.getSelectedItem().toString());
+                pro.setStock(Integer.parseInt(txtCanPro.getText()));
+                pro.setPrecio(Double.parseDouble(txtPrecioPro.getText()));
+                pro.setId(Integer.parseInt(txtIdPro.getText()));
+                proDAO.ModificarProductos(pro);
+                JOptionPane.showMessageDialog(null, "Producto actualizado");
+                LimpiarTable();
+                ListarProductos();
+                LimpiarProductos();
+
+            }
+
+        }
+
+    }//GEN-LAST:event_btnEditarProActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1303,6 +1330,7 @@ public class Sistema extends javax.swing.JFrame {
             }
         });
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;
