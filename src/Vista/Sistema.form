@@ -237,8 +237,8 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="txtDniVenta" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="txtDniVenta" min="-2" pref="199" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="txtNombreClienteVenta" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -349,6 +349,9 @@
                   <Image iconType="3" name="/Img/eliminar.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarVentaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtCodigoVenta">
               <Events>
@@ -434,6 +437,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtDniVenta">
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDniVentaKeyPressed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNombreClienteVenta">
               <Properties>

@@ -328,6 +328,11 @@ public class Sistema extends javax.swing.JFrame {
         jLabel11.setText("Stock Disponible");
 
         btnEliminarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar.png"))); // NOI18N
+        btnEliminarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarVentaActionPerformed(evt);
+            }
+        });
 
         txtCodigoVenta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -363,6 +368,12 @@ public class Sistema extends javax.swing.JFrame {
         jLabel3.setText("DNI");
 
         jLabel4.setText("NOMBRE");
+
+        txtDniVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtDniVentaKeyPressed(evt);
+            }
+        });
 
         txtNombreClienteVenta.setEditable(false);
 
@@ -412,8 +423,8 @@ public class Sistema extends javax.swing.JFrame {
                 .addGap(44, 44, 44))
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(txtDniVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                        .addComponent(txtDniVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtNombreClienteVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
@@ -1398,6 +1409,35 @@ public class Sistema extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_txtCantidadVentaKeyPressed
+
+    private void btnEliminarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarVentaActionPerformed
+        // TODO add your handling code here:
+        modelo = (DefaultTableModel) tableVenta.getModel();
+        modelo.removeRow(tableVenta.getSelectedRow());
+        TotalPagar();
+        txtCodigoVenta.requestFocus();
+    }//GEN-LAST:event_btnEliminarVentaActionPerformed
+
+    private void txtDniVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniVentaKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!"".equals(txtDniVenta.getText())) {
+                int dni = Integer.parseInt(txtDniVenta.getText());
+                cl = client.BuscarCliente(dni);
+                if (cl.getNombre()!= null) {
+                    txtNombreClienteVenta.setText(""+ cl.getNombre());
+                    txtTelefonoClienteVenta.setText(""+ cl.getTelefono());
+                    txtDireccionClienteVenta.setText(""+ cl.getDireccion());
+                    txtRazonClienteVenta.setText(""+ cl.getRazon());                                     
+                }else{
+                    txtDniVenta.setText("");
+                    JOptionPane.showMessageDialog(null, "El cliente no existe.");
+                }
+                
+                
+            }
+        }
+    }//GEN-LAST:event_txtDniVentaKeyPressed
 
     /**
      * @param args the command line arguments
