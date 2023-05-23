@@ -33,6 +33,7 @@ public class Sistema extends javax.swing.JFrame {
     Productos pro = new Productos();
     ProductosDAO proDAO = new ProductosDAO();
     int item;
+    double totalPagar = 0.00;
     
     /**
      * Creates new form Sistema
@@ -1338,9 +1339,7 @@ public class Sistema extends javax.swing.JFrame {
                     txtCantidadVenta.requestFocus();
 
                 } else {
-                    txtDescripcionVenta.setText("");
-                    txtPrecioVenta.setText("");
-                    txtStockDisponible.setText("");
+                    LimpiarVenta();
                     txtCodigoVenta.requestFocus();
                 }
             } else {
@@ -1365,6 +1364,12 @@ public class Sistema extends javax.swing.JFrame {
                 if (stock>=cantidad) {
                     item = item + 1;
                     modelo = (DefaultTableModel) tableVenta.getModel();
+                    for (int i = 0; i < tableVenta.getRowCount(); i++) {
+                        if (tableVenta.getValueAt(i, 1).equals(txtDescripcionVenta.getText())) {
+                            JOptionPane.showMessageDialog(null, "El producto ya esta registrado.");
+                            return;
+                        }
+                    }
                     ArrayList lista = new ArrayList();
                     lista.add(item);
                     lista.add(cod);
@@ -1380,7 +1385,9 @@ public class Sistema extends javax.swing.JFrame {
                     Ob[4]=lista.get(5);
                     modelo.addRow(Ob);
                     tableVenta.setModel(modelo);
-                    
+                    TotalPagar();
+                    LimpiarVenta();
+                    txtCodigoVenta.requestFocus();
                 }else{
                 JOptionPane.showMessageDialog(null, "Stock no disponible");
                 }
@@ -1563,5 +1570,24 @@ public class Sistema extends javax.swing.JFrame {
         txtDesPro.setText("");
         txtCanPro.setText("");
         txtPrecioPro.setText("");
+    }
+
+    private  void TotalPagar(){
+        totalPagar = 0.00;
+        int numFila = tableVenta.getRowCount();
+        for (int i = 0; i < numFila; i++) {
+            double cal = Double.parseDouble(String.valueOf(tableVenta.getModel().getValueAt(i, 4)));
+            totalPagar = totalPagar + cal;
+        }
+            labelTotal.setText(String.format("%.2f", totalPagar));
+    }
+
+    private void LimpiarVenta(){
+        txtCodigoVenta.setText("");
+        txtDescripcionVenta.setText("");
+        txtCantidadVenta.setText("");
+        txtStockDisponible.setText("");
+        txtPrecioVenta.setText("");
+                                    
     }
 }
