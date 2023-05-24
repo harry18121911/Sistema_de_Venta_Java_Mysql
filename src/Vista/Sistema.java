@@ -1668,11 +1668,11 @@ public class Sistema extends javax.swing.JFrame {
     }
 
     private void RegistrarDetalle(){
+        int id = vDAO.IdVenta();
         for (int i = 0; i < tableVenta.getRowCount(); i++) {
             String cod = tableVenta.getValueAt(i, 0).toString();
             int cant = Integer.parseInt(tableVenta.getValueAt(i, 2).toString());
             double precio = Double.parseDouble(tableVenta.getValueAt(i, 3).toString());
-            int id = 1;
             det.setCod_pro(cod);
             det.setCantidad(cant);
             det.setPrecio(precio);

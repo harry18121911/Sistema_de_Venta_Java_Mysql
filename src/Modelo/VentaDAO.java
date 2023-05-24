@@ -19,12 +19,34 @@ import javax.swing.JOptionPane;
  * @author harry
  */
 public class VentaDAO {
-        Connection con;
-        Conexion cn = new Conexion();
-        PreparedStatement ps;
-        int r;
+
+    Connection con;
+    Conexion cn = new Conexion();
+    PreparedStatement ps;
+    ResultSet rs;
+    int r;
+
+    public int IdVenta() {
+        int id = 0;
+        String sql = "select max(id) from ventas";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return id;
+    }
+
+    
+    
     public int RegistrarVenta(Venta v) {
-        
+
         String sql = "insert into ventas (cliente, vendedor, total) values (?,?,?)";
         try {
             con = cn.getConnection();
@@ -35,7 +57,7 @@ public class VentaDAO {
             ps.execute();
         } catch (SQLException e) {
             System.out.println(e.toString());
-        }finally{
+        } finally {
             try {
                 con.close();
             } catch (SQLException ex) {
@@ -45,7 +67,7 @@ public class VentaDAO {
         return r;
     }
 
-    public int RegistrarDetalle(Detalle det){
+    public int RegistrarDetalle(Detalle det) {
         String sql = "insert into detalle (cod_pro, cantidad, precio, id_venta) values (?,?,?,?)";
         try {
             con = cn.getConnection();
@@ -53,19 +75,19 @@ public class VentaDAO {
             ps.setString(1, det.getCod_pro());
             ps.setInt(2, det.getCantidad());
             ps.setDouble(3, det.getPrecio());
-            ps.setInt(4, det.getId_venta());
+            ps.setInt(4, det.getId());
             ps.execute();
         } catch (SQLException e) {
             System.out.println(e.toString());
-        }finally{
+        } finally {
             try {
                 con.close();
             } catch (SQLException ex) {
                 System.out.println(ex.toString());
             }
         }
-        
+
         return r;
     }
-    
+
 }
