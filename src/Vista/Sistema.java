@@ -6,6 +6,7 @@ package Vista;
 
 import Modelo.Cliente;
 import Modelo.ClienteDAO;
+import Modelo.Detalle;
 import Modelo.Productos;
 import Modelo.ProductosDAO;
 import Modelo.Proveedor;
@@ -38,6 +39,8 @@ public class Sistema extends javax.swing.JFrame {
     double totalPagar = 0.00;
     Venta v =new Venta();
     VentaDAO vDAO = new VentaDAO();
+    Detalle det = new Detalle();
+    
     /**
      * Creates new form Sistema
      */
@@ -1457,6 +1460,7 @@ public class Sistema extends javax.swing.JFrame {
     private void btnGenerarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarVentaActionPerformed
         // TODO add your handling code here:
         RegistrarVenta();
+        RegistrarDetalle();
     }//GEN-LAST:event_btnGenerarVentaActionPerformed
 
     /**
@@ -1662,4 +1666,21 @@ public class Sistema extends javax.swing.JFrame {
         vDAO.RegistrarVenta(v);
         
     }
+
+    private void RegistrarDetalle(){
+        for (int i = 0; i < tableVenta.getRowCount(); i++) {
+            String cod = tableVenta.getValueAt(i, 0).toString();
+            int cant = Integer.parseInt(tableVenta.getValueAt(i, 2).toString());
+            double precio = Double.parseDouble(tableVenta.getValueAt(i, 3).toString());
+            int id = 1;
+            det.setCod_pro(cod);
+            det.setCantidad(cant);
+            det.setPrecio(precio);
+            det.setId(id);
+            vDAO.RegistrarDetalle(det);
+        
+        }
+    
+    }
+
 }
