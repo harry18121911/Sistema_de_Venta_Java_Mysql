@@ -33,6 +33,7 @@ public class Sistema extends javax.swing.JFrame {
     Proveedor pr = new Proveedor();
     ProveedorDAO prDAO = new ProveedorDAO();
     DefaultTableModel modelo = new DefaultTableModel();
+    DefaultTableModel tmp = new DefaultTableModel();
     Productos pro = new Productos();
     ProductosDAO proDAO = new ProductosDAO();
     int item;
@@ -1397,7 +1398,7 @@ public class Sistema extends javax.swing.JFrame {
                 int stock = Integer.parseInt(txtStockDisponible.getText());
                 if (stock>=cantidad) {
                     item = item + 1;
-                    DefaultTableModel tmp = (DefaultTableModel) tableVenta.getModel();
+                    tmp = (DefaultTableModel) tableVenta.getModel();
                     for (int i = 0; i < tableVenta.getRowCount(); i++) {
                         if (tableVenta.getValueAt(i, 1).equals(txtDescripcionVenta.getText())) {
                             JOptionPane.showMessageDialog(null, "El producto ya esta registrado.");
@@ -1466,6 +1467,10 @@ public class Sistema extends javax.swing.JFrame {
         // TODO add your handling code here:
         RegistrarVenta();
         RegistrarDetalle();
+        ActualizarStock();
+        LimpiarTableVenta();
+        LimpiarClienteVenta();
+        
     }//GEN-LAST:event_btnGenerarVentaActionPerformed
 
     private void btnNuevaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaVentaActionPerformed
@@ -1693,4 +1698,34 @@ public class Sistema extends javax.swing.JFrame {
     
     }
 
+    private void ActualizarStock(){
+        for (int i = 0; i < tableVenta.getRowCount(); i++) {
+            String cod = tableVenta.getValueAt(i, 0).toString();
+            int cant = Integer.parseInt(tableVenta.getValueAt(i, 2).toString());
+            pro = proDAO.BuscarPro(cod);
+            int StockActual = pro.getStock() - cant;
+            vDAO.ActualizarStock(StockActual, cod);
+        }
+        
+    }
+    
+    private void LimpiarTableVenta(){
+        tmp = (DefaultTableModel) tableVenta.getModel();
+        int fila = tableVenta.getRowCount();
+        for (int i = 0; i < fila; i++) {
+            tmp.removeRow(0);
+        }
+    
+    }
+ 
+    private void LimpiarClienteVenta(){
+        txtDniVenta.setText("");
+        txtNombreClienteVenta.setText("");
+        txtTelefonoClienteVenta.setText("");
+        txtDireccionClienteVenta.setText("");
+        txtRazonClienteVenta.setText("");   
+    }
+    
+        
+    
 }
