@@ -22,6 +22,8 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -69,7 +71,7 @@ public class Sistema extends javax.swing.JFrame {
         txtIdpro.setVisible(false);
         AutoCompleteDecorator.decorate(cbxProveedor);
         proDAO.ConsultarProveedor(cbxProveedor);
-        pdf();
+        
 
     }
 
@@ -1483,6 +1485,7 @@ public class Sistema extends javax.swing.JFrame {
         RegistrarVenta();
         RegistrarDetalle();
         ActualizarStock();
+        pdf();
         LimpiarTableVenta();
         LimpiarClienteVenta();
         
@@ -1782,6 +1785,78 @@ public class Sistema extends javax.swing.JFrame {
             
             doc.add(Encabezado);
             
+            Paragraph cliente = new Paragraph();
+            cliente.add(Chunk.NEWLINE);
+            cliente.add("Datos de los clientes" + "\n\n");
+            doc.add(cliente);
+            
+            PdfPTable tablaCliente = new PdfPTable(4);
+            tablaCliente.setWidthPercentage(100);
+            tablaCliente.getDefaultCell().setBorder(0);
+            float[] ColumnaCliente = new float[]{20f, 50f, 30f, 40f};
+            tablaCliente.setWidths(ColumnaCliente);
+            tablaCliente.setHorizontalAlignment(Element.ALIGN_LEFT);
+            PdfPCell cli1 = new PdfPCell(new Phrase("Dni", negrita));
+            PdfPCell cli2 = new PdfPCell(new Phrase("Nombre", negrita));
+            PdfPCell cli3 = new PdfPCell(new Phrase("Telefono", negrita));
+            PdfPCell cli4 = new PdfPCell(new Phrase("Direccion", negrita));
+            cli1.setBorder(0);
+            cli2.setBorder(0);
+            cli3.setBorder(0);
+            cli4.setBorder(0);
+            tablaCliente.addCell(cli1);
+            tablaCliente.addCell(cli2);
+            tablaCliente.addCell(cli3);
+            tablaCliente.addCell(cli4);
+            tablaCliente.addCell(txtDniVenta.getText());
+            tablaCliente.addCell(txtNombreClienteVenta.getText());
+            tablaCliente.addCell(txtTelefonoClienteVenta.getText());
+            tablaCliente.addCell(txtDireccionClienteVenta.getText());
+            doc.add(tablaCliente);
+            
+            
+            //Productos
+            
+            PdfPTable tablaProductos = new PdfPTable(4);
+            tablaProductos.setWidthPercentage(100);
+            tablaProductos.getDefaultCell().setBorder(0);
+            float[] ColumnaProductos = new float[]{20f, 50f, 30f, 40f};
+            tablaProductos.setWidths(ColumnaProductos);
+            tablaProductos.setHorizontalAlignment(Element.ALIGN_LEFT);
+            PdfPCell Pro1 = new PdfPCell(new Phrase("Descripcion", negrita));
+            PdfPCell Pro2 = new PdfPCell(new Phrase("Cantidad", negrita));
+            PdfPCell Pro3 = new PdfPCell(new Phrase("Precio unitario", negrita));
+            PdfPCell Pro4 = new PdfPCell(new Phrase("Precio total", negrita));
+            Pro1.setBorder(0);
+            Pro2.setBorder(0);
+            Pro3.setBorder(0);
+            Pro4.setBorder(0);
+            Pro1.setBackgroundColor(BaseColor.DARK_GRAY);
+            Pro2.setBackgroundColor(BaseColor.DARK_GRAY);
+            Pro3.setBackgroundColor(BaseColor.DARK_GRAY);
+            Pro4.setBackgroundColor(BaseColor.DARK_GRAY);
+            
+            tablaProductos.addCell(Pro1);
+            tablaProductos.addCell(Pro2);
+            tablaProductos.addCell(Pro3);
+            tablaProductos.addCell(Pro4);
+            
+            for (int i = 0; i < tableVenta.getRowCount(); i++) {
+                String producto = tableVenta.getValueAt(i, 1).toString();
+                String cantidad = tableVenta.getValueAt(i, 2).toString();              
+                String precio = tableVenta.getValueAt(i, 3).toString();
+                String total = tableVenta.getValueAt(i, 4).toString();
+                
+                tablaProductos.addCell(producto);
+                tablaProductos.addCell(cantidad);
+                tablaProductos.addCell(precio);
+                tablaProductos.addCell(total);
+            }
+            
+            
+            
+            
+            doc.add(tablaProductos);
             doc.close();
             archivo.close();
             
