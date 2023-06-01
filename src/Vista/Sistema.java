@@ -8,6 +8,7 @@ import Modelo.Cliente;
 import Modelo.ClienteDAO;
 import Modelo.Config;
 import Modelo.Detalle;
+import Modelo.Eventos;
 import Modelo.Productos;
 import Modelo.ProductosDAO;
 import Modelo.Proveedor;
@@ -62,7 +63,7 @@ public class Sistema extends javax.swing.JFrame {
     VentaDAO vDAO = new VentaDAO();
     Detalle det = new Detalle();
     Config conf = new Config();
-
+    Eventos event = new Eventos();
     /**
      * Creates new form Sistema
      */
@@ -133,18 +134,19 @@ public class Sistema extends javax.swing.JFrame {
         tableProducto.setModel(modelo);
 
     }
-    
-    public void ListarConfig(){
+
+    public void ListarConfig() {
         conf = proDAO.BuscarDatos();
-        txtIdConfig.setText(""+conf.getId());
-        txtDniConfig.setText("" +conf.getDni());
-        txtNombreConfig.setText(""+conf.getNombre());
-        txtTelefonoConfig.setText(""+conf.getTelefono());
-        txtDireccionConfig.setText(""+conf.getDireccion());
-        txtRazonConfig.setText(""+conf.getRazon());
-        
-        
-    };
+        txtIdConfig.setText("" + conf.getId());
+        txtDniConfig.setText("" + conf.getDni());
+        txtNombreConfig.setText("" + conf.getNombre());
+        txtTelefonoConfig.setText("" + conf.getTelefono());
+        txtDireccionConfig.setText("" + conf.getDireccion());
+        txtRazonConfig.setText("" + conf.getRazon());
+
+    }
+
+    ;
     
 
     public void LimpiarTable() {
@@ -153,10 +155,6 @@ public class Sistema extends javax.swing.JFrame {
             i = i - 1;
         }
     }
-    
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -317,9 +315,19 @@ public class Sistema extends javax.swing.JFrame {
 
         btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/compras.png"))); // NOI18N
         btnVentas.setText("Ventas");
+        btnVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentasActionPerformed(evt);
+            }
+        });
 
         btnConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/config.png"))); // NOI18N
         btnConfig.setText("Config");
+        btnConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfigActionPerformed(evt);
+            }
+        });
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logo.png"))); // NOI18N
         jLabel2.setText("jLabel2");
@@ -397,15 +405,32 @@ public class Sistema extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCodigoVentaKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoVentaKeyTyped(evt);
+            }
+        });
+
+        txtDescripcionVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDescripcionVentaKeyTyped(evt);
+            }
         });
 
         txtCantidadVenta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCantidadVentaKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadVentaKeyTyped(evt);
+            }
         });
 
         txtPrecioVenta.setEditable(false);
+        txtPrecioVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioVentaKeyTyped(evt);
+            }
+        });
 
         tableVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -432,9 +457,17 @@ public class Sistema extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtDniVentaKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDniVentaKeyTyped(evt);
+            }
         });
 
         txtNombreClienteVenta.setEditable(false);
+        txtNombreClienteVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreClienteVentaKeyTyped(evt);
+            }
+        });
 
         btnGenerarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/print.png"))); // NOI18N
         btnGenerarVenta.addActionListener(new java.awt.event.ActionListener() {
@@ -568,6 +601,36 @@ public class Sistema extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         jLabel16.setText("RAZON SOCIAL:");
+
+        txtDniCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDniClienteKeyTyped(evt);
+            }
+        });
+
+        txtNombreCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreClienteKeyTyped(evt);
+            }
+        });
+
+        txtTelefonoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoClienteKeyTyped(evt);
+            }
+        });
+
+        txtDireccionCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionClienteKeyTyped(evt);
+            }
+        });
+
+        txtRazonCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRazonClienteKeyTyped(evt);
+            }
+        });
 
         tableCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -729,6 +792,36 @@ public class Sistema extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         jLabel21.setText("RAZON SOCIAL");
 
+        txtDniProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDniProveedorKeyTyped(evt);
+            }
+        });
+
+        txtNombreProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreProveedorKeyTyped(evt);
+            }
+        });
+
+        txtTelefonoProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoProveedorKeyTyped(evt);
+            }
+        });
+
+        txtDireccionProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionProveedorKeyTyped(evt);
+            }
+        });
+
+        txtRazonProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRazonProveedorKeyTyped(evt);
+            }
+        });
+
         tableProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -874,7 +967,36 @@ public class Sistema extends javax.swing.JFrame {
         jLabel26.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         jLabel26.setText("PROVEEDOR");
 
+        txtCodigoPro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoProKeyTyped(evt);
+            }
+        });
+
+        txtDesPro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDesProKeyTyped(evt);
+            }
+        });
+
+        txtCanPro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCanProKeyTyped(evt);
+            }
+        });
+
+        txtPrecioPro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioProKeyTyped(evt);
+            }
+        });
+
         cbxProveedor.setEditable(true);
+        cbxProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cbxProveedorKeyTyped(evt);
+            }
+        });
 
         tableProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1073,6 +1195,11 @@ public class Sistema extends javax.swing.JFrame {
 
         btnActualizarConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Actualizar (2).png"))); // NOI18N
         btnActualizarConfig.setText("ACTUALIZAR");
+        btnActualizarConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarConfigActionPerformed(evt);
+            }
+        });
 
         jLabel32.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         jLabel32.setText("DATOS DE LA EMPRESA");
@@ -1515,12 +1642,21 @@ public class Sistema extends javax.swing.JFrame {
 
     private void btnGenerarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarVentaActionPerformed
         // TODO add your handling code here:
-        RegistrarVenta();
-        RegistrarDetalle();
-        ActualizarStock();
-        pdf();
-        LimpiarTableVenta();
-        LimpiarClienteVenta();
+        if (tableVenta.getRowCount() > 0) {
+            if (!"".equals(txtNombreClienteVenta.getText())) {
+                RegistrarVenta();
+                RegistrarDetalle();
+                ActualizarStock();
+                pdf();
+                LimpiarTableVenta();
+                LimpiarClienteVenta();
+            }else{
+                JOptionPane.showMessageDialog(null, "Debes buscar un cliente.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay productos en la venta.");
+        }
+
 
     }//GEN-LAST:event_btnGenerarVentaActionPerformed
 
@@ -1532,6 +1668,140 @@ public class Sistema extends javax.swing.JFrame {
     private void txtIdConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdConfigActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdConfigActionPerformed
+
+    private void txtCodigoVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoVentaKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+        
+    }//GEN-LAST:event_txtCodigoVentaKeyTyped
+
+    private void txtDescripcionVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionVentaKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtDescripcionVentaKeyTyped
+
+    private void txtCantidadVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadVentaKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtCantidadVentaKeyTyped
+
+    private void txtPrecioVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyTyped
+        // TODO add your handling code here:
+        event.numberDecimalKeyPress(evt, txtPrecioVenta);
+    }//GEN-LAST:event_txtPrecioVentaKeyTyped
+
+    private void txtDniVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniVentaKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtDniVentaKeyTyped
+
+    private void txtNombreClienteVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreClienteVentaKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtNombreClienteVentaKeyTyped
+
+    private void txtDniClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniClienteKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtDniClienteKeyTyped
+
+    private void txtNombreClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreClienteKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtNombreClienteKeyTyped
+
+    private void txtTelefonoClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoClienteKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtTelefonoClienteKeyTyped
+
+    private void txtDireccionClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionClienteKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtDireccionClienteKeyTyped
+
+    private void txtRazonClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRazonClienteKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtRazonClienteKeyTyped
+
+    private void txtDniProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniProveedorKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtDniProveedorKeyTyped
+
+    private void txtNombreProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreProveedorKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtNombreProveedorKeyTyped
+
+    private void txtTelefonoProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoProveedorKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtTelefonoProveedorKeyTyped
+
+    private void txtDireccionProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionProveedorKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtDireccionProveedorKeyTyped
+
+    private void txtRazonProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRazonProveedorKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtRazonProveedorKeyTyped
+
+    private void txtCodigoProKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoProKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtCodigoProKeyTyped
+
+    private void txtDesProKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDesProKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtDesProKeyTyped
+
+    private void txtCanProKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCanProKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtCanProKeyTyped
+
+    private void txtPrecioProKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioProKeyTyped
+        // TODO add your handling code here:
+        event.numberDecimalKeyPress(evt, txtPrecioPro);
+    }//GEN-LAST:event_txtPrecioProKeyTyped
+
+    private void cbxProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxProveedorKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_cbxProveedorKeyTyped
+
+    private void btnActualizarConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarConfigActionPerformed
+        // TODO add your handling code here:
+        if (!"".equals(txtDniConfig.getText()) && !"".equals(txtNombreConfig.getText()) && !"".equals(txtTelefonoConfig.getText()) && !"".equals(txtDireccionConfig.getText()) && !"".equals(txtRazonConfig.getText()) && !"".equals(txtIdCliente.getText())) {
+                conf.setDni(Integer.parseInt(txtDniConfig.getText()));
+                conf.setNombre(txtNombreConfig.getText());
+                conf.setTelefono(Integer.parseInt(txtTelefonoConfig.getText()));
+                conf.setDireccion(txtDireccionConfig.getText());
+                conf.setRazon(txtRazonConfig.getText());
+                conf.setId(Integer.parseInt(txtIdConfig.getText()));
+                proDAO.ModificarDatos(conf);
+                JOptionPane.showMessageDialog(null, "Datos de la empreza modificados.");
+                ListarConfig();
+            }else{
+                JOptionPane.showMessageDialog(null, "");
+        }
+        
+    }//GEN-LAST:event_btnActualizarConfigActionPerformed
+
+    private void btnConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfigActionPerformed
+        // TODO add your handling code here:
+        jTabbedPane2.setSelectedIndex(5);
+    }//GEN-LAST:event_btnConfigActionPerformed
+
+    private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
+        // TODO add your handling code here:
+        jTabbedPane2.setSelectedIndex(4);
+    }//GEN-LAST:event_btnVentasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1799,7 +2069,7 @@ public class Sistema extends javax.swing.JFrame {
             fecha.add(Chunk.NEWLINE);
             Date date = new Date();
 
-            fecha.add("Factura:" + id +"\n" + "Fecha: " + new SimpleDateFormat("dd-MM-yyyy").format(date) + "\n\n");
+            fecha.add("Factura:" + id + "\n" + "Fecha: " + new SimpleDateFormat("dd-MM-yyyy").format(date) + "\n\n");
 
             PdfPTable Encabezado = new PdfPTable(4);
             Encabezado.setWidthPercentage(100);
@@ -1812,7 +2082,7 @@ public class Sistema extends javax.swing.JFrame {
 
             String dni = txtDniConfig.getText();
             String nombre = txtNombreConfig.getText();
-            String telefono = txtTelefonoConfig.getText();            
+            String telefono = txtTelefonoConfig.getText();
             String direccion = txtDireccionConfig.getText();
             String razon = txtRazonConfig.getText();
 
@@ -1891,32 +2161,31 @@ public class Sistema extends javax.swing.JFrame {
             }
 
             doc.add(tablaProductos);
-            
+
             Paragraph info = new Paragraph();
             info.add(Chunk.NEWLINE);
             info.add("Total a pagar: " + totalPagar);
             info.setAlignment(Element.ALIGN_RIGHT);
             doc.add(info);
-            
+
             Paragraph firma = new Paragraph();
             firma.add(Chunk.NEWLINE);
             firma.add("Cancelación y firma.\n\n");
             firma.add("-------------------");
             firma.setAlignment(Element.ALIGN_CENTER);
             doc.add(firma);
-            
+
             Paragraph mensaje = new Paragraph();
             mensaje.add(Chunk.NEWLINE);
-            mensaje.add("Gracias por su compra.\n\n");          
+            mensaje.add("Gracias por su compra.\n\n");
             mensaje.setAlignment(Element.ALIGN_CENTER);
-            doc.add(mensaje);                       
+            doc.add(mensaje);
             doc.close();
             archivo.close();
-            
+
             Desktop.getDesktop().open(file);
-            
-            
-        } catch (DocumentException | IOException e) {           
+
+        } catch (DocumentException | IOException e) {
             System.out.println(e.toString());
         }
 
