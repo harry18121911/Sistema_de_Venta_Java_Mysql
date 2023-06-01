@@ -108,4 +108,28 @@ public class VentaDAO {
         
     }
     
+    public List ListarVentas() {
+        List<Venta> ListaVenta = new ArrayList();
+        String sql = "select * from ventas";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Venta vent = new Venta();
+                vent.setId(rs.getInt("id"));
+                vent.setCliente(rs.getString("cliente"));
+                vent.setVendedor(rs.getString("vendedor"));
+                vent.setTotal(rs.getDouble("total"));
+                
+                ListaVenta.add(vent);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return ListaVenta;
+
+    }
+    
 }
