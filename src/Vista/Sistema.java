@@ -15,6 +15,7 @@ import Modelo.Proveedor;
 import Modelo.ProveedorDAO;
 import Modelo.Venta;
 import Modelo.VentaDAO;
+import Modelo.login;
 import Reportes.Excel;
 import Reportes.Grafico;
 import com.itextpdf.text.BaseColor;
@@ -76,6 +77,11 @@ public class Sistema extends javax.swing.JFrame {
      */
     public Sistema() {
         initComponents();
+        
+    }
+    
+    public Sistema(login priv){
+        initComponents();
         this.setLocationRelativeTo(null);
         txtIdCliente.setVisible(false);
         txtIdVenta.setVisible(false);
@@ -85,8 +91,15 @@ public class Sistema extends javax.swing.JFrame {
         AutoCompleteDecorator.decorate(cbxProveedor);
         proDAO.ConsultarProveedor(cbxProveedor);
         txtIdConfig.setVisible(false);
-        ListarConfig();
+        
+        if (priv.getRol().equals("Asistente")) {
+            btnConfig.setEnabled(false);
+            LabelVendedor.setText(priv.getNombre());
+        }else{
+            LabelVendedor.setText(priv.getNombre());           
+        }
     }
+    
 
     public void ListarCliente() {
 
