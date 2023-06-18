@@ -1398,9 +1398,10 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarClienteActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        jTabbedPane2.setSelectedIndex(1);
         LimpiarTable();
         ListarCliente();
-        jTabbedPane2.setSelectedIndex(1);
+        
 
 
     }//GEN-LAST:event_btnClientesActionPerformed
@@ -1485,9 +1486,10 @@ public class Sistema extends javax.swing.JFrame {
 
     private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
         // TODO add your handling code here:
+        jTabbedPane2.setSelectedIndex(2);
         LimpiarTable();
         ListarProveedor();
-        jTabbedPane2.setSelectedIndex(2);
+        
 
 
     }//GEN-LAST:event_btnProveedorActionPerformed
@@ -1568,9 +1570,10 @@ public class Sistema extends javax.swing.JFrame {
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
         // TODO add your handling code here:
+        jTabbedPane2.setSelectedIndex(3);
         LimpiarTable();
         ListarProductos();
-        jTabbedPane2.setSelectedIndex(3);
+        
 
     }//GEN-LAST:event_btnProductosActionPerformed
 
