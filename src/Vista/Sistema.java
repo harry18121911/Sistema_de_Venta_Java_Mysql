@@ -1965,7 +1965,7 @@ public class Sistema extends javax.swing.JFrame {
         });
     }
 
-
+    //pdf
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LabelVendedor;
     private com.toedter.calendar.JDateChooser MyDate;
@@ -2192,7 +2192,7 @@ public class Sistema extends javax.swing.JFrame {
             Document doc = new Document();
             PdfWriter.getInstance(doc, archivo);
             doc.open();
-            Image img = Image.getInstance("src/Img/logo_pdf.png");
+            Image img = Image.getInstance("src/Img/CajaLogo3.jpg");
 
             Paragraph fecha = new Paragraph();
 
